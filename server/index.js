@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 require('dotenv').config();
+
+const userRoute = require('./routes/user.route');
 
 mongoose
     .connect(process.env.MONGODB)
@@ -9,6 +12,7 @@ mongoose
     .catch((error) => console.error(`Connexion à MongoDB échouée : ${error}`));
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -16,6 +20,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+app.use('/api/user', userRoute);
 
 const port = 3000;
 app.listen(port, () => console.log(`Le serveur tourne sur le port ${port}`));
