@@ -11,7 +11,8 @@ userSchema.plugin(uniqueValidator);
 
 userSchema.pre('save', async function (next) {
     try {
-        const hashedPassword = bcrypt.hash(this.password, 10);
+        // Avant de sauvegarder un user, on hash le password
+        const hashedPassword = await bcrypt.hash(this.password, 10); // Contrairement à ce que dit l'IDE, il faut un await
         this.password = hashedPassword;
         next();
     } catch (error) {
