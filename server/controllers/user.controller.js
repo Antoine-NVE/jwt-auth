@@ -63,16 +63,14 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    try {
-        if (!req.cookies.jwt) {
-            res.status(400).json({ message: "Vous n'êtes pas connecté" });
-        } else {
-            res.clearCookie('jwt');
-            res.status(200).json({ message: 'Vous avez été déconnecté' });
-        }
-    } catch (error) {
-        res.status(400).json(error);
-    }
+    res.clearCookie('jwt');
+    res.status(200).json({ message: 'Vous avez été déconnecté' });
+};
+
+exports.isAuth = (req, res) => {
+    // On renvoie juste un booléen pour indiquer que l'utilisateur est connecté
+    // S'il ne l'est pas, c'est le middleware auth.js qui va l'indiquer
+    res.status(200).json({ message: 'Utilisateur connecté', isAuth: true });
 };
 
 // exports.setCookie = async (req, res) => {
