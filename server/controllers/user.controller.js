@@ -62,6 +62,19 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.logout = (req, res) => {
+    try {
+        if (!req.cookies.jwt) {
+            res.status(400).json({ message: "Vous n'êtes pas connecté" });
+        } else {
+            res.clearCookie('jwt');
+            res.status(200).json({ message: 'Vous avez été déconnecté' });
+        }
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
+
 // exports.setCookie = async (req, res) => {
 //     try {
 //         res.cookie('jwt', 'my-jwt', {
