@@ -55,28 +55,3 @@ exports.isAuth = (req, res) => {
     // S'il ne l'est pas, c'est le middleware auth.js qui va l'indiquer
     res.status(200).json({ message: 'Utilisateur connecté', isAuth: true });
 };
-
-// exports.setCookie = async (req, res) => {
-//     try {
-//         res.cookie('jwt', 'my-jwt', {
-//             maxAge: expiresIn,
-//             httpOnly: true,
-//         });
-//         res.send('Cookie défini');
-//     } catch (error) {
-//         res.send('Cookie pas défini');
-//     }
-// };
-
-// exports.getCookie = async (req, res) => {
-//     try {
-//         const cookieValue = req.cookies.jwt;
-//         if (cookieValue) {
-//             res.send(cookieValue);
-//         } else {
-//             res.send('Cookie pas trouvé');
-//         }
-//     } catch (error) {
-//         res.send('Erreur');
-//     }
-// };

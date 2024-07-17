@@ -8,6 +8,7 @@ exports.connectUser = (res, userId, secret = process.env.SECRET, expiresIn = 24 
     res.cookie('jwt', token, {
         secure: false,
         httpOnly: true,
+        sameSite: 'strict',
         maxAge: expiresIn * 1000, // maxAge demande des millisecondes
     });
 };
