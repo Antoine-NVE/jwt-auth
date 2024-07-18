@@ -7,7 +7,7 @@ import { catchError, Observable, throwError } from 'rxjs';
     providedIn: 'root',
 })
 export class AuthService {
-    private readonly API = 'http://localhost:3000/api/user';
+    private readonly API = 'http://localhost:3000/api/auth';
 
     constructor(private http: HttpClient) {}
 

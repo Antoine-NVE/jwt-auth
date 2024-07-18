@@ -21,7 +21,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/user', userRoute);
+app.use('/api/auth', userRoute);
 
 const port = 3000;
 app.listen(port, () => console.log(`Le serveur tourne sur le port ${port}`));
