@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const uniqid = require('uniqid');
 const app = express();
 require('dotenv').config();
 
@@ -18,6 +19,22 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+
+    // À chaque requête, on vérifie qu'on a bien un token CSRF
+    if (!req.cookies.csrf) {
+        const csrfToken = uniqid();
+
+        // Pas de durée pour qu'il se supprime automatiquement
+        res.cookie('csrf', csrfToken, {
+            secure: false,
+            httpOnly: true,
+            sameSite: 'strict',
+        });
+
+        // On le stocke ici pour une utilisation immédiate
+        req.cookies.csrf = csrfToken;
+    }
+
     next();
 });
 
