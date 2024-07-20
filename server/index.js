@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 require('dotenv').config();
 
-const userRoute = require('./routes/user.route');
+const userRoute = require('./routes/auth.route');
 
 mongoose
     .connect(process.env.MONGODB)
