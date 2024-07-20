@@ -55,3 +55,14 @@ exports.isAuth = (req, res) => {
     // S'il ne l'est pas, c'est le middleware auth.js qui va l'indiquer
     res.status(200).json({ message: 'Utilisateur connecté', isAuth: true });
 };
+
+exports.readConnectedUser = async (req, res) => {
+    try {
+        // On récupère l'utilisateur sans le mot de passe
+        const user = await User.findOne({ _id: req.auth.id }).select('-password');
+
+        res.status(200).json({ user: user, csrfToken: req.cookies.csrfToken });
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};

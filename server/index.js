@@ -21,18 +21,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 
     // À chaque requête, on vérifie qu'on a bien un token CSRF
-    if (!req.cookies.csrf) {
+    if (!req.cookies.csrfToken) {
         const csrfToken = uniqid();
 
         // Pas de durée pour qu'il se supprime automatiquement
-        res.cookie('csrf', csrfToken, {
+        res.cookie('csrfToken', csrfToken, {
             secure: false,
             httpOnly: true,
             sameSite: 'strict',
         });
 
         // On le stocke ici pour une utilisation immédiate
-        req.cookies.csrf = csrfToken;
+        req.cookies.csrfToken = csrfToken;
     }
 
     next();
