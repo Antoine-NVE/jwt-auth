@@ -53,7 +53,7 @@ exports.logout = (req, res) => {
 exports.isAuth = (req, res) => {
     // On renvoie juste un booléen pour indiquer que l'utilisateur est connecté
     // S'il ne l'est pas, c'est le middleware auth.js qui va l'indiquer
-    res.status(200).json({ message: 'Utilisateur connecté', isAuth: true });
+    res.status(200).json({ message: 'Utilisateur connecté'});
 };
 
 exports.readConnectedUser = async (req, res) => {

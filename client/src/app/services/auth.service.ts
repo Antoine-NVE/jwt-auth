@@ -25,8 +25,8 @@ export class AuthService {
     }
 
     // En plus du message obtenu dans la plupart des requêtes, on récupère également un booléen
-    public isAuth(): Observable<ApiResponse & { isAuth: boolean }> {
-        return this.http.get<ApiResponse & { isAuth: boolean }>(this.API + '/is-auth').pipe(catchError(this.handleError));
+    public isAuth(): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(this.API + '/is-auth').pipe(catchError(this.handleError));
     }
 
     public connectedUser(): Observable<User> {
