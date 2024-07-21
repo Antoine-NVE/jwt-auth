@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const uniqid = require('uniqid');
 const app = express();
 require('dotenv').config();
 
+const csrfService = require('./services/csrf.service');
 const userRoute = require('./routes/auth.route');
 
 mongoose
@@ -22,17 +22,7 @@ app.use((req, res, next) => {
 
     // À chaque requête, on vérifie qu'on a bien un token CSRF
     if (!req.cookies.csrfToken) {
-        const csrfToken = uniqid();
-
-        // Pas de durée pour qu'il se supprime automatiquement
-        res.cookie('csrfToken', csrfToken, {
-            secure: false,
-            httpOnly: true,
-            sameSite: 'strict',
-        });
-
-        // On le stocke ici pour une utilisation immédiate
-        req.cookies.csrfToken = csrfToken;
+        csrfService.createToken(req, res);
     }
 
     next();
