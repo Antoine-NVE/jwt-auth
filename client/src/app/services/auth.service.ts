@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { NewUser } from '../models/user.model';
+import { LoginUser, User } from '../models/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { ApiResponse } from '../models/api-response.model';
 
 @Injectable({
     providedIn: 'root',
@@ -11,8 +12,25 @@ export class AuthService {
 
     constructor(private http: HttpClient) {}
 
-    public register(user: NewUser): Observable<{ message: string }> {
-        return this.http.post<{ message: string }>(this.API + '/register', user).pipe(catchError(this.handleError));
+    public register(user: LoginUser): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.API + '/register', user).pipe(catchError(this.handleError));
+    }
+
+    public login(user: LoginUser): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.API + '/login', user).pipe(catchError(this.handleError));
+    }
+
+    public logout(): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(this.API + '/logout').pipe(catchError(this.handleError));
+    }
+
+    // En plus du message obtenu dans la plupart des requêtes, on récupère également un booléen
+    public isAuth(): Observable<ApiResponse & { isAuth: boolean }> {
+        return this.http.get<ApiResponse & { isAuth: boolean }>(this.API + '/is-auth').pipe(catchError(this.handleError));
+    }
+
+    public connectedUser(): Observable<User> {
+        return this.http.get<User>(this.API + '/connected-user').pipe(catchError(this.handleError));
     }
 
     private handleError(error: HttpErrorResponse) {
