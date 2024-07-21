@@ -4,8 +4,9 @@ const cookieParser = require('cookie-parser');
 const app = express();
 require('dotenv').config();
 
+const authRoute = require('./routes/auth.route');
+const csrfRoute = require('./routes/csrf.route');
 const csrfService = require('./services/csrf.service');
-const userRoute = require('./routes/auth.route');
 
 mongoose
     .connect(process.env.MONGODB)
@@ -28,7 +29,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/auth', userRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/csrf', csrfRoute);
 
 const port = 3000;
 app.listen(port, () => console.log(`Le serveur tourne sur le port ${port}`));
