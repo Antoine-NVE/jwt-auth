@@ -11,6 +11,6 @@ export class CsrfService {
     constructor(private http: HttpClient) {}
 
     public read(): Observable<{ csrfToken: string }> {
-        return this.http.get<{ csrfToken: string }>(this.API);
+        return this.http.get<{ csrfToken: string }>(this.API, { withCredentials: true });
     }
 }
