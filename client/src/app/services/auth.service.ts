@@ -34,14 +34,12 @@ export class AuthService {
     }
 
     private handleError(error: HttpErrorResponse) {
-        if (error.status === 0) {
-            console.error('Erreur client ou réseau : ' + error.error);
-            console.log(error);
-        } else {
-            console.error('Erreur serveur : ' + error.error);
-            console.log(error);
-        }
+        // if (error.status === 0) {
+        //     console.error('Erreur client ou réseau : ' + error.error.message);
+        // } else {
+        //     console.error('Erreur serveur : ' + error.error.message);
+        // }
 
-        return throwError(() => 'Une erreur est survenue.');
+        return throwError(() => error.error.message);
     }
 }

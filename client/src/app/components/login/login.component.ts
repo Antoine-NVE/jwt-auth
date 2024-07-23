@@ -4,7 +4,7 @@ import { CsrfService } from '../../services/csrf.service';
 import { User } from '../../models/user.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
         csrfToken: new FormControl(''),
     });
 
-    constructor(private authService: AuthService, private csrfService: CsrfService) {}
+    constructor(private authService: AuthService, private csrfService: CsrfService, private router: Router) {}
 
     ngOnInit(): void {
         this.csrfService.read().subscribe({
@@ -35,13 +35,18 @@ export class LoginComponent implements OnInit {
 
         this.authService.connectedUser().subscribe({
             next: (user) => (this.connectedUser = user),
+            error: (error) => console.error(error),
         });
     }
 
     public loginFormSubmit() {
         this.authService.login(this.loginForm.value).subscribe({
-            next: (response) => console.log(response.message),
-            error: (error) => console.log(error),
+            next: (response) => {
+                console.log(response.message);
+
+                this.router.navigate(['/']);
+            },
+            error: (error) => console.error(error),
         });
     }
 }
