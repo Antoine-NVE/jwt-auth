@@ -1,1 +1,17 @@
-<p>register works!</p>
+<h1>Inscription</h1>
+
+<p *ngIf="connectedUser">Vous êtes déjà connecté en tant que {{ connectedUser.username }}. <a [routerLink]="['/deconnexion']">Se déconnecter</a></p>
+
+<form [formGroup]="registerForm" (submit)="registerFormSubmit()">
+    <div class="mb-3">
+        <label for="username">Nom d'utilisateur :</label>
+        <input id="username" class="form-control" type="text" formControlName="username" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password">Mot de passe :</label>
+        <input id="password" class="form-control" type="password" formControlName="password" />
+    </div>
+
+    <button class="btn btn-outline-success d-block ms-auto" type="submit">Valider</button>
+</form>
